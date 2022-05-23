@@ -16,7 +16,14 @@ object ClimateService {
    * @param description "my awesome sentence contains a key word like climate change"
    * @return Boolean True
    */
-  def isClimateRelated(description: String): Boolean = ???
+  def isClimateRelated(description: String): Boolean = {
+    description.toLowerCase.contains("global warming")||description.toLowerCase.contains("ipcc")||description.toLowerCase.contains("climate change")
+    //no need to add a 'if' statement to return true or false as the contains returns automatically a boolean
+    //toLowerCase : to pass everything in 'minuscule' so there is no capital letters
+    //toUpperCase : to pass the string in capital letters  
+  }
+
+
 
   /**
    * parse a list of raw data and transport it with type into a list of CO2Record
@@ -25,9 +32,18 @@ object ClimateService {
    * otherwise : None
    * you can access to Tuple with myTuple._1, myTuple._2, myTuple._3
    */
+
+  //List : Year, Month, ppm value
+  
   def parseRawData(list: List[(Int, Int, Double)]) : List[Option[CO2Record]] = {
-    list.map { record => ??? }
-    ???
+    list.map { record =>   
+    val parsedRecord = CO2Record(record._1, record._2, record._3)
+    if(parsedRecord.isValidPpmValue){
+       Some(parsedRecord)} 
+    else{ 
+      None 
+      } 
+    } 
   }
 
   /**
